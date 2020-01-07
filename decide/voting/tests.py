@@ -208,3 +208,7 @@ class VotingTestCase(BaseTestCase):
         response = self.client.put('/voting/{}/'.format(voting.pk), data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json(), 'Voting already tallied')
+
+class VotingTestCase2(BaseTestCase):
+	def test1(self):
+		self.assertEqual(1+1, 2)
