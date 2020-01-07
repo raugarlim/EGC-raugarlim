@@ -1,27 +1,30 @@
 dist: xenial
 services:
-  - postgresql
+- postgresql
 branches:
   only:
-  - master 
+  - master
 addons:
   postgresql: '9.4'
 before_script:
-  - psql -U postgres -c "create user decide password 'decide'"
-  - psql -U postgres -c "create database test_decide owner decide"
-  - psql -U postgres -c "ALTER USER decide CREATEDB"
+- psql -U postgres -c "create user decide password 'decide'"
+- psql -U postgres -c "create database test_decide owner decide"
+- psql -U postgres -c "ALTER USER decide CREATEDB"
 language: python
 python:
-  - '3.6'
+- '3.6'
 install:
-  - pip install -r requirements.txt
-  - pip install codacy-coverage
+- pip install -r requirements.txt
+- pip install codacy-coverage
 script:
-  - cd decide
-  - cp travis_local_settings.py local_settings.py
-  - python ./manage.py migrate
-  - python ./manage.py test
-  - coverage run --branch --source=. ./manage.py test --keepdb
-  - coverage xml
-  - python-codacy-coverage -r coverage.xml
-  - rm local_settings.py
+- cd decide
+- cp travis_local_settings.py local_settings.py
+- python ./manage.py migrate
+- python ./manage.py test
+- coverage run --branch --source=. ./manage.py test --keepdb
+- coverage xml
+- python-codacy-coverage -r coverage.xml
+- rm local_settings.py
+deploy:
+  api_key:
+    secure: DdhJoIBvCvf+QhK4bJl7wbJ/VCsNiQvmfwWW9eq2ylCbWJLBGlqwBhjBtWiPYIyk2YNTfsYx4WbiHKiLLOnBKrftwsXVdep2y0X1gPjeZjxQjTIjr8+PvhFc71ycyRreepoAdb0RDDrcN3IHRHyJddu1HCv7E9UbOCvPtcbadPU2KofwDo95tIXzmNICd2weT/WwVZMr8riecLM9Kw7QcWB+xkuoTfH0p5r+YC8GQaaxQdjSsPBWVGi29FYN6ArEKls+OdE3ryGXhXh8J3v9ntpzsM6dAS8LUkmJPbmP4Vx2hmG4yaHEv1wWA3TzczbCQmxXE+B1HIO8SvNtnOXRf+EYXp4RlmAfg6iHYsOg/6UakEQt8zKa97Y12WpjupIUKKrGB6faGotzMWyAriAsxjvZ9F1fNLOwtf9r1iePFU6hcxxiZp/j9iPPHUTOQDxpl04TPOPZkABAgk9sIDDEyXhoM6xUE3TYrA8U4ciOsutQWdBIUQHUHqxedNMqIBrMUff/HUGhWYsM7KZgLqij8M7GENHjvzKroDXoslolInRVrIg0l67Y4hqazqgTLlDvZIYcPFicl1v+U7Uv8FcssiToL15I89Vnx5p9ChhY2jj/wUqdiRsVE8YmEvRKClRKtJgJkcJB2G96jgjoOm2bMnH8EFzIQ8V3aBuhDr3Ffo4=
